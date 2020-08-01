@@ -1,0 +1,59 @@
+#Git이란?
+#Git이란 souce 관리를 위한 분산 버전 관리 시스템입니다. 최초로 리눅스 토발즈가 리눅스 커널 개발에 이용하려고 개발하였다.
+#코드를 버전 관리함으로써, 배포후 major 버그를 발생시 빠르게 rollback을 하거나 수정된 코드만을 파악하여, 버그를 빠르게 찾거나, 한 프로젝트의 코드를 여러 사람이 함께 작업 할 수 있도록 도와주는 등 사용하면 많은 이점을 가지고 있다.
+
+#Git 구조
+#Upstream : 프로젝트 소스 파일
+#Origin : Fork한 저장소
+#Local : Clone한 곳
+
+#Git Source를 읽어보자
+#git shortlog -sn | nl >> 누가 가장 많이 기여?
+#git log --online >> commit 리스트
+#git show {commit_id} >> commit 내용 확인
+
+#Git Config(설정)
+#git config --global --unset credential.helper >> ID와 PW 캐싱데이터 삭제하여 계정 충돌 방지
+#git config --system --unset credential.helper
+#git config --global user.email {email_address} >> Github 계정/이름 설정
+#git config --global user.name {name}
+
+#Git Branch
+#branch를 생성하면, 복사본이나 압축파일을 생성할 필요 없이 다른 버전을 만들 수 있다.
+#git checkout -b {branch_name} >> branch 생성
+#git checkout -d {branch_name} >> branch 삭제
+
+#Git Commit 과정
+#git status >> 현재 상태 확인 (nothing to commit : commit 할 게 없다)
+#git checout -b {branch_name} >> branch 새엇ㅇ
+#nano {file_name} >> file수정 (원하는 편집기 사용)
+#git diff >> 변경 내역 확인
+#git add {file_name} >> commit할 준비
+#git status >> commit할 준비 되었는지 확인
+#git commit -m {commit_message} >> commit history를 만든다.
+#git show : commit 내역을 확인한다. (author, date, message 등)
+
+#Git Commit 제출하기
+#git push origin {branch_name} >> Origin에 업로드
+#웹에서 Pull-Request 할 수 있다. >> Upstream의 master와 비교해서 다른 부분 제출)
+#이때, Pull-Request 하면, Upstream에 merge되는 것이 아니라, Pull-Request 게시판에 올라간다.
+
+#Git Reset 기능
+#git reset >> add내역을 삭제한다.
+#git reset --hard HEAD~1 >> 가장 최근 내역을 삭제한다. (commit 내역까지)
+#git reset --soft HEAD~1 >> 가장 최근 내역을 삭제한다. (commit 내역 남기고)
+
+#Git Amend 기능
+#git commit --amend >> 변경된 내용을 최근 commit_id와 합친다. (commit_id는 바뀐다.)
+
+#Git Remote 기능
+#git remote add upstream {URL} >> upstream을 등록한다.
+#git remote add origin {URL} >> origin을 등록한다.
+
+#Git Rebase 기능
+#최신 base로 업데이트 해야할 때
+#내가 열심히 commit했는데, Upstream이 바뀌어 버려서 충돌이 일어날 것 같을 때
+#fetch로 base를 교체할 수 있다. 
+#fetch + merge == Pull-Request
+#git rebase --i --root #commit 되감기
+#git rebase --contiue #commit 되감은 내용 풀기
