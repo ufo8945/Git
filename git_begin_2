@@ -1,0 +1,47 @@
+#Git 복습
+#Pull-Request : 내가 작업한 것을 다른 사람 프로젝트에 제출 (바로 merge는 아님)
+#Push : 내가 작업한 것을 내 프로젝트에 제출
+#내가 PR을 했는데, 이미 다른 사람의 작업본이 merge가 되어버려 내 소스의 base가 구버전이 되었을 때, rebase 필요
+#절대 다시 fork 하고, clone하고, pull을 하지 않고, fetch를 하도록 하자.
+
+#Git Rebase 과제 1
+#Q1. 가장 오래된 역사 부터 두번째 commit 이후에 새로운 commit 3개 넣기
+#git rebase -i --root #2번째 commit edit으로 수정 (2번째 commit으로 돌아간다.)
+#git log --oneline #현재 소스 확인
+#git add test1.txt
+#git commit -m "commit test 1" >> add하고 commit하는 과정 2번 더 진행하기
+#git rebase --continue >> 3개 얹은 것 위에, rebase -i 했던 것 (3번째 commit 부터) 다시 쌓여짐
+#잘못 했다면,,
+#git rebase --abort >> rebase 취소
+#git rebase --hard origin/master >> 초기화
+
+#Git Rebase 과제 2
+#Q2. 위에서 넣은 commit 3개를 commit 1개로 합치자.
+#(단, 3,2번 commit 합친 후, 그것을 1번 commit과 합치는 순서로 하자.)
+#git rebase -i --root >> 5번째 commit으로 돌아가기
+#git reset --soft HEAD~1 >> commit한 내용은 보존 되고, commit 자체는 삭제한다.
+#git commit --amend >> 3번째 수정내용이 2번째 commit으로 흡수된다.
+#git rebase --continue >> 6번째 commit부터 다시 쌓여진다.
+#위 내용과 동일하게 test1 commit과도 합쳐보자.
+
+#Git Rebase 과제 3
+#Q3. 가장 오래된 역사에서 두번째 커밋 삭제하기
+#git rebase -i --root >> 2번째 commit으로 돌아간다.
+#git reset --hard HEAD~1 >> 가장 최근 commit내역 삭제 (commit한 내용도 삭제된다!)
+#git rebase --continue #3번째 commit부터 다시 쌓여진다.
+
+#Git Blame
+#해당 소스라인에서 누가 마지막으로 수정했는지 추적이 가능하다.
+#잘하면, 누가 처음 그 소스를 생성했는지도 추적이 가능하다..
+#git blame {directory} >> 몇 번째 줄을 누가 언제 수정했는지 확인 가능 (최근 수정 commit_id도 확인)
+#git show {commit_id} >> 위에서 확인한 commit_id로 변경 내역 확인할 수 있다.
+
+#Git과 협업
+#내가 무엇을 했는지 친절하게 설명해둔다.
+#Pull-Request 게시판에 제안을 한다. (Before/After)
+#Review 와 Discussion이 이루어진다.
+#commit을 최대한 seperate하자. (Review/Discussion이 가능한 단위/ test 단위 등)
+#``` ```로 highlight가 가능하다. 가독성 좋은 제안을 올릴 수 있다.
+#reject을 당해도 괜찮다. 중요한 commit일 수록, Review/Discussion은 무겁게 이루어지니까..
+#Issue를 올릴 때, 어떤 version에서 어떤 상황일 때 어떤 issue가 발생하는지 (+알파로 코드까지) 제기
+#Issue의 해결을 commit할 때, message 안에 몇 번 issue를 해결했는지 함께 써주자.
